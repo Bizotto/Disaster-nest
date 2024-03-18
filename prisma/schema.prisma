@@ -9,12 +9,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Alert {
-  id          String    @id @default(uuid()) @map("_id")
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   category    String
   description String
   lat         Float
@@ -25,18 +25,18 @@ model Alert {
 }
 
 model Message {
-  id      String @id @default(uuid()) @map("_id")
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
   message String
   user    User   @relation(fields: [userId], references: [id])
-  userId  String
+  userId  String @db.ObjectId
   alert   Alert  @relation(fields: [alertId], references: [id])
-  alertId String
+  alertId String @db.ObjectId
 }
 
 model User {
-  id       String    @id @default(uuid()) @map("_id")
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name     String?
-  email    String
+  email    String    @unique
   password String
   Message  Message[]
 }
