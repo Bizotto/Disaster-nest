@@ -14,7 +14,7 @@ export class UserService {
   async create(@Body() data: CreateUserDTO) {
     const { email, name, password } = data;
 
-    const emailAlreadyExists = await this.prismaService.user.findFirst({
+    const emailAlreadyExists = await this.prismaService.user.findUnique({
       where: {
         email,
       },
@@ -53,7 +53,7 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    return await this.prismaService.user.findFirst({
+    return await this.prismaService.user.findUnique({
       where: {
         email,
       },

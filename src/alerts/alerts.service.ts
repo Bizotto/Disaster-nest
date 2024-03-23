@@ -17,7 +17,6 @@ export class AlertsService {
 
   async createAlert(@Body() data: CreateAlertDTO) {
     const { category, description, lat, long } = data;
-    console.log(data);
 
     if (!category) throw new Error('Category is required');
     if (!description) throw new Error('Description is required');
